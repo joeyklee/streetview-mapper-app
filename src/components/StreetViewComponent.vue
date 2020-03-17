@@ -1,41 +1,45 @@
 <template>
   <div id="StreetViewComponent">
     <div class="sidebar">
-      <input
-        class="sidebar__search"
-        type="search"
-        placeholder="🔎search for a location"
-      />
+      <form class="sidebar__form" @submit.prevent="triggerSearch">
+        <input
+          v-model="searchTerm"
+          class="sidebar__form-search"
+          type="search"
+          name="search"
+          placeholder="🔎search for a location"
+        />
+      </form>
       <div ref="gmap" id="MapView"></div>
       <div class="sidebar__meta">
         <h3 class="sidebar__meta-title">Location Info</h3>
-        <fieldset class="sidebar__meta-section">
+        <section class="sidebar__meta-section">
           <legend class="sidebar__meta-label">lat,lon:</legend>
           <p class="sidebar__meta-content">
             {{ Number(currentLocation.latitude.toFixed(5)) }},{{
               Number(currentLocation.longitude.toFixed(5))
             }}
           </p>
-        </fieldset>
+        </section>
 
-        <fieldset class="sidebar__meta-section">
+        <section class="sidebar__meta-section">
           <legend class="sidebar__meta-label">heading</legend>
           <p class="sidebar__meta-content">
             {{ Number(currentLocation.pov_heading.toFixed(5)) }}
           </p>
-        </fieldset>
+        </section>
 
-        <fieldset class="sidebar__meta-section">
+        <section class="sidebar__meta-section">
           <legend class="sidebar__meta-label">pitch</legend>
           <p class="sidebar__meta-content">
             {{ Number(currentLocation.pov_pitch.toFixed(5)) }}
           </p>
-        </fieldset>
+        </section>
 
-        <fieldset class="sidebar__meta-section">
+        <section class="sidebar__meta-section">
           <legend class="sidebar__meta-label">panorama id</legend>
           <p class="sidebar__meta-content">{{ currentLocation.pano_id }}</p>
-        </fieldset>
+        </section>
       </div>
       <button class="submit-btn" @click.prevent="createLocation">
         Save to database
@@ -48,6 +52,11 @@
 <script>
 export default {
   name: "StreetViewComponent",
+  data() {
+    return {
+      searchTerm: "New York"
+    };
+  },
   computed: {
     currentLocation() {
       if (this.$store.state.currentLocation.latitude !== null) {
@@ -59,6 +68,10 @@ export default {
   methods: {
     createLocation() {
       this.$store.dispatch("createLocation");
+    },
+    triggerSearch() {
+      console.log(this.searchTerm);
+      this.$store.dispatch("setMapLocation", this.searchTerm);
     }
   },
   async mounted() {
@@ -86,9 +99,14 @@ export default {
   flex-direction: column;
   background-color: #f4f4f4;
 
-  &__search {
+  &__form {
+    width: 100%;
     height: 3rem;
-    padding: 0 0 0 0.25rem;
+    &-search {
+      width: 100%;
+      height: 100%;
+      padding: 0 0 0 0.25rem;
+    }
   }
 
   &__meta {
@@ -99,6 +117,7 @@ export default {
     color: white;
     display: flex;
     flex-direction: column;
+    max-width: 400px;
     // justify-content: center;
 
     &-title {
@@ -111,6 +130,7 @@ export default {
     &-section {
       border: 1px solid #777777;
       border-radius: 4px;
+      word-wrap: break-word;
     }
 
     &-section:not(:last-child) {

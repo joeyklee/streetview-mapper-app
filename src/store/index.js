@@ -20,7 +20,8 @@ export default new Vuex.Store({
       links: null
     },
     gmap: null,
-    panorama: null
+    panorama: null,
+    searchService: null
   },
   mutations: {
     setLocations(state, data) {
@@ -39,13 +40,17 @@ export default new Vuex.Store({
       });
       FileSaver.saveAs(file);
     },
-    initMap(state, _gmap, _panorama) {
-      state.gmap = _gmap;
-      state.panorama = _panorama;
+    initMap(state, data) {
+      state.gmap = data.gmap;
+      state.panorama = data.panorama;
+      state.searchService = data.searchService;
     },
     setCurrentLocation(state, data) {
       state.currentLocation = { ...state.currentLocation, ...data };
     }
+    // setMapLocation(state, _request){
+
+    // }
   },
   actions: {
     async getLocations(context) {
@@ -61,7 +66,7 @@ export default new Vuex.Store({
       context.commit("exportGeojson", data);
     },
     async initMap(context, { mapRef, panoRef }) {
-      const options = {};
+      const options = { libraries: ["places"] };
       const loader = new Loader(APIKEY, options);
       const google = await loader.load();
       const jaystreet = { lat: 40.693361, lng: -73.98731 };
@@ -80,6 +85,8 @@ export default new Vuex.Store({
           pitch: 10
         }
       });
+
+      const searchService = new google.maps.places.PlacesService(gmap);
 
       // attach gmap to streetview
       gmap.setStreetView(panorama);
@@ -113,7 +120,19 @@ export default new Vuex.Store({
         // console.log("heading", this.pov_heading);
       });
 
-      context.commit("initMap", gmap, panorama);
+      context.commit("initMap", { gmap, panorama, searchService });
+    },
+    // eslint-disable-next-line prettier/prettier
+    setMapLocation({ state }, _request) {
+      const request = {
+        query: _request,
+        fields: ["name", "geometry"]
+      };
+
+      state.searchService.findPlaceFromQuery(request, results => {
+        state.gmap.setCenter(results[0].geometry.location);
+        state.panorama.setPosition(results[0].geometry.location);
+      });
     }
   },
   modules: {}
