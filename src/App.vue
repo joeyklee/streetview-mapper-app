@@ -33,6 +33,8 @@ body {
 }
 
 #app {
+  width: 100%;
+  height: 100%;
   display: grid;
   grid-template-rows: 4rem 1fr 4rem;
 }

@@ -89,7 +89,7 @@ export default {
   height: 100%;
   min-height: 600px;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: minmax(400px, 1fr) 3fr;
 }
 
 .sidebar {
@@ -117,7 +117,6 @@ export default {
     color: white;
     display: flex;
     flex-direction: column;
-    max-width: 400px;
     // justify-content: center;
 
     &-title {
