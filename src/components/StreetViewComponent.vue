@@ -2,6 +2,7 @@
   <div id="StreetViewComponent">
     <div id="MapView"></div>
     <div id="StreetView"></div>
+    <button @click.prevent="createLocation">Save to database</button>
   </div>
 </template>
 
@@ -9,77 +10,96 @@
 import { Loader } from "google-maps";
 
 const APIKEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
-console.log("YOOOOOOO", APIKEY);
 
 export default {
   name: "StreetViewComponent",
+  data() {
+    return {
+      gmap: null,
+      panorama: null,
+      latitude: null,
+      longitude: null,
+      location_pano: null,
+      pov_heading: null,
+      pov_pitch: null,
+      pano_id: null,
+      links: null,
+      copyright: null
+    };
+  },
   methods: {
-    async createMap() {
+    async initMap() {
       const options = {};
       const loader = new Loader(APIKEY, options);
-
       const google = await loader.load();
-      // eslint-disable-next-line no-unused-vars
-      var fenway = { lat: 42.345573, lng: -71.098326 };
-      var map = new google.maps.Map(document.getElementById("MapView"), {
+      const fenway = { lat: 42.345573, lng: -71.098326 };
+
+      // Gmap
+      const $map = document.getElementById("MapView");
+      this.gmap = new google.maps.Map($map, {
         center: fenway,
         zoom: 14
       });
-      var panorama = new google.maps.StreetViewPanorama(
-        document.getElementById("StreetView"),
-        {
-          position: fenway,
-          pov: {
-            heading: 34,
-            pitch: 10
-          }
+
+      // Pano
+      const $pano = document.getElementById("StreetView");
+      this.panorama = new google.maps.StreetViewPanorama($pano, {
+        position: fenway,
+        pov: {
+          heading: 34,
+          pitch: 10
         }
-      );
-      map.setStreetView(panorama);
-
-      panorama.addListener("pano_changed", function() {
-        // var panoCell = document.getElementById("pano-cell");
-        // panoCell.innerHTML = panorama.getPano();
-        console.log("pano", panorama.getPano());
       });
 
-      panorama.addListener("links_changed", function() {
-        // var linksTable = document.getElementById("links_table");
-        // while (linksTable.hasChildNodes()) {
-        //   linksTable.removeChild(linksTable.lastChild);
-        // }
-        // var links = panorama.getLinks();
-        // for (var i in links) {
-        //   var row = document.createElement("tr");
-        //   linksTable.appendChild(row);
-        //   var labelCell = document.createElement("td");
-        //   labelCell.innerHTML = "<b>Link: " + i + "</b>";
-        //   var valueCell = document.createElement("td");
-        //   valueCell.innerHTML = links[i].description;
-        //   linksTable.appendChild(labelCell);
-        //   linksTable.appendChild(valueCell);
-        // }
-        console.log("pano", panorama.getLinks());
+      // attach gmap to streetview
+      this.gmap.setStreetView(this.panorama);
+      // attach event listeners
+      this.attachMapEventListeners();
+    },
+    attachMapEventListeners() {
+      // attach event listeners
+      this.panorama.addListener("pano_changed", () => {
+        console.log("pano", this.panorama.getPano());
+        this.pano_id = this.panorama.getPano();
       });
 
-      panorama.addListener("position_changed", function() {
-        // var positionCell = document.getElementById("position-cell");
-        // positionCell.firstChild.nodeValue = panorama.getPosition() + "";
-        console.log("position", panorama.getPosition());
+      this.panorama.addListener("links_changed", () => {
+        const links = this.panorama.getLinks();
+        this.links = links;
+        console.log("links", this.panorama.getLinks());
       });
 
-      panorama.addListener("pov_changed", function() {
-        // var headingCell = document.getElementById("heading-cell");
-        // var pitchCell = document.getElementById("pitch-cell");
-        // headingCell.firstChild.nodeValue = panorama.getPov().heading + "";
-        // pitchCell.firstChild.nodeValue = panorama.getPov().pitch + "";
-        console.log("pov - pitch", panorama.getPov().pitch);
-        console.log("heading", panorama.getPov().heading);
+      this.panorama.addListener("position_changed", () => {
+        const position = this.panorama.getPosition();
+        this.latitude = position.lat();
+        this.longitude = position.lng();
+        console.log("position", this.latitude, this.longitude);
       });
+
+      this.panorama.addListener("pov_changed", () => {
+        const pov = this.panorama.getPov();
+        this.pov_pitch = pov.pitch;
+        this.pov_heading = pov.heading;
+        console.log("pov - pitch", this.pov_pitch);
+        console.log("heading", this.pov_heading);
+      });
+    },
+    createLocation() {
+      const newLocation = {
+        latitude: this.latitude,
+        longitude: this.longitude,
+        location_pano: this.location_pano,
+        pov_heading: this.pov_heading,
+        pov_pitch: this.pov_pitch,
+        pano_id: this.pano_id,
+        links: this.links
+      };
+
+      this.$store.dispatch("createLocation", newLocation);
     }
   },
   async mounted() {
-    await this.createMap();
+    await this.initMap();
   }
 };
 </script>
