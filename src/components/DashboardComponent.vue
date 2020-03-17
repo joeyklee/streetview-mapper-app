@@ -1,9 +1,5 @@
 <template>
   <div class="dashboard">
-    <!-- export button -->
-    <button class="export-btn" @click.prevent="exportGeojson">
-      Export All to GeoJSON
-    </button>
     <main class="overview">
       <!-- list -->
       <section class="overview__list">
@@ -43,6 +39,10 @@
       <!-- list -->
       <div class="overview__map" id="gmap" ref="gmap"></div>
     </main>
+    <!-- export button -->
+    <button class="export-btn" @click.prevent="exportGeojson">
+      Export All to GeoJSON
+    </button>
   </div>
 </template>
 
@@ -135,7 +135,7 @@ export default {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: 3rem 1fr;
+  grid-template-rows: 1fr 3rem;
 }
 
 .overview {
@@ -145,9 +145,9 @@ export default {
   grid-template-columns: minmax(200px, 1fr) 3fr;
 
   &__list {
-    border: 1px solid black;
     width: 100%;
     max-height: 80vh;
+    margin-top: 1rem;
 
     &-title {
       margin-left: 0.5rem;
@@ -155,7 +155,6 @@ export default {
   }
 
   &__map {
-    border: 1px solid black;
     height: 100%;
     width: 100%;
     background-color: #eee;
@@ -171,7 +170,7 @@ export default {
   &__item {
     padding: 0.5rem;
     border: 1px solid black;
-    background-color: #f4f4f4;
+    background-color: #eee;
 
     &-section {
       width: 100%;

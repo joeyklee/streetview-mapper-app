@@ -28,6 +28,7 @@ export default new Vuex.Store({
     },
     createLocation(state, data) {
       state.locations = [...state.locations, data];
+      alert("data successfully submitted!");
     },
     exportGeojson(state, data) {
       const filename = `streetview-mapper__${Math.round(
