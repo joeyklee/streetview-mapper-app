@@ -6,6 +6,13 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
+// console.log(process.env)
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config({ path: './.env.development' });
+// } else {
+//   require('dotenv').config({ path: './.env' });
+// }
+
 new Vue({
   router,
   store,

@@ -1,18 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld msg="Streetview Mapper" />
+    <div class="map">
+      <StreetViewComponent />
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
+import StreetViewComponent from "@/components/StreetViewComponent.vue";
 
 export default {
   name: "Home",
   components: {
-    HelloWorld
+    HelloWorld,
+    StreetViewComponent
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.map {
+  height: 500px;
+  width: 500px;
+}
+</style>
