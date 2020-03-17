@@ -22,7 +22,7 @@
 </template>
 <style lang="scss" scoped>
 .footer {
-  background-color: #eee;
+  background-color: #f4f4f4;
   display: flex;
   flex-direction: row;
   height: 100%;

@@ -19,7 +19,7 @@
   align-items: center;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  background-color: #eee;
+  background-color: #f4f4f4;
   justify-content: space-between;
 
   .nav__list {
