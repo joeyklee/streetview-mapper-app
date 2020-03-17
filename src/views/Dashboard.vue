@@ -1,16 +1,22 @@
 <template>
-  <div class="dashboard">
-    <h1>Dashboard</h1>
-    <LocationListComponent />
+  <div class="dashboard-container">
+    <DashboardComponent />
   </div>
 </template>
 
 <script>
-import LocationListComponent from "@/components/LocationListComponent";
+import DashboardComponent from "@/components/DashboardComponent";
 export default {
   name: "Dashboard",
   components: {
-    LocationListComponent
+    DashboardComponent
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.dashboard-container {
+  width: 100%;
+  height: 100%;
+}
+</style>
