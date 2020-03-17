@@ -64,17 +64,17 @@ export default new Vuex.Store({
       const options = {};
       const loader = new Loader(APIKEY, options);
       const google = await loader.load();
-      const fenway = { lat: 42.345573, lng: -71.098326 };
+      const jaystreet = { lat: 40.693361, lng: -73.98731 };
 
       // Gmap
       const gmap = new google.maps.Map(mapRef, {
-        center: fenway,
+        center: jaystreet,
         zoom: 14
       });
 
       // // Pano
       const panorama = new google.maps.StreetViewPanorama(panoRef, {
-        position: fenway,
+        position: jaystreet,
         pov: {
           heading: 34,
           pitch: 10
