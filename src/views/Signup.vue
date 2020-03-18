@@ -10,10 +10,12 @@
       <h2 class="auth__title">sign up</h2>
       <form @submit.prevent="handleSubmit" class="auth__form">
         <section class="auth__form-section">
-          <label class="auth__form-label"
-            >Google maps API key - be sure to enable: 1) Google Maps JavaScript
-            API, 2) Places API, and 3) Street View Static API</label
-          >
+          <label class="auth__form-label">
+            (Optional): Google maps API key →
+            <a href="https://learn.streetview-mapper.org" target="_blank"
+              >Get your API key here</a
+            >
+          </label>
           <input
             v-model="googlemaps_apikey"
             class="auth__form-input"
