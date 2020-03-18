@@ -38,7 +38,10 @@ export default new Vuex.Store({
       state.user_id = data.user_id;
     },
     setLocations(state, data) {
-      state.locations = data;
+      const userSnapshots = data.filter(
+        item => item.createdBy_username === state.username
+      );
+      state.locations = userSnapshots;
     },
     createLocation(state, data) {
       state.locations = [...state.locations, data];

@@ -54,7 +54,8 @@
 
 <script>
 import { Loader } from "google-maps";
-// const APIKEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
+import UserService from "@/services/UserService";
+
 export default {
   name: "LocationListComponent",
   data() {
@@ -75,7 +76,7 @@ export default {
       const loader = new Loader(this.$store.state.googlemaps_apikey, options);
       const google = await loader.load();
       const gmap = new google.maps.Map(this.$refs.gmap, {
-        center: { lat: 42.345573, lng: -71.098326 },
+        center: { lat: 40.6932965, lng: -73.9874731 },
         zoom: 14
       });
 
@@ -122,14 +123,11 @@ export default {
     },
     exportGeojson() {
       this.$store.dispatch("exportGeojson");
-    },
-    goToMarker() {
-      // const selected = this.markers.find(item => item.title === this.$refs[item.title][0].id);
-      console.log(this.gmap);
-      // this.gmap.setCenter(selected.getPosition());
     }
   },
   async mounted() {
+    const authData = await UserService.checkAuth();
+    await this.$store.dispatch("setUserDetails", authData);
     await this.$store.dispatch("getLocations");
     await this.createMap();
   }

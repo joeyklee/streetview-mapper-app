@@ -43,7 +43,9 @@
           />
         </section>
         <section class="auth__form-section">
-          <label class="auth__form-label">password </label>
+          <label class="auth__form-label"
+            >password - must be atleast 7 characters long.</label
+          >
           <input
             v-model="password"
             class="auth__form-input"

@@ -6,6 +6,13 @@
         Hello there fellow Streetview Mapper!
       </p>
       <p class="about__content-paragraph">
+        <span class="bold">Streetview Mapper</span> is a simple tool to allow
+        curious mappers (like you!) to take «snapshots» of the world through
+        Google Streetview. These snapshots are stored in a database to allow
+        users to revisit what things they've found remarkable, noteworthy,
+        strange, weird, and/or compelling.
+      </p>
+      <p class="about__content-paragraph">
         This is a project by
         <span class="bold"
           ><a href="https://jk-lee.com" target="_blank">Joey Lee</a></span
@@ -15,7 +22,9 @@
       <p class="about__content-paragraph">
         For his course
         <span class="bold"
-          ><a href="https://jk-lee.com" target="_blank">«All Maps Lie»</a></span
+          ><a href="https://all-maps-lie-2020.netlify.com/#/" target="_blank"
+            >«All Maps Lie»</a
+          ></span
         >
         at New York University's Interactive Telecommunication Program (ITP),
         Joey's students were supposed to perform their own «Data Walks»,
@@ -24,13 +33,6 @@
         to find other mechanisms to observe the world, explore spatial media,
         and practice paying attention. This tool was developed out of this need
         to provide other ways to explore and observe the world.
-      </p>
-      <p class="about__content-paragraph">
-        <span class="bold">Streetview Mapper</span> is a simple tool to allow
-        curious mappers (like you!) to take “snapshots” of the world through
-        Google Streetview. These snapshots are stored in a database to allow
-        users to revisit what things they've found remarkable, noteworthy,
-        strange, weird, and/or compelling.
       </p>
 
       <p class="about__content-paragraph">
