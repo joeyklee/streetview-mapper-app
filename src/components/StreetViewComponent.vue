@@ -44,6 +44,16 @@
           <legend class="sidebar__meta-label">panorama id</legend>
           <p class="sidebar__meta-content">{{ currentLocation.pano_id }}</p>
         </section>
+        <section v-if="authd" class="sidebar__meta-section">
+          <legend class="sidebar__meta-label">add a description</legend>
+          <form class="sidebar__meta-form">
+            <input
+              v-model="snapshot_description"
+              class="sidebar__meta-input"
+              type="text"
+            />
+          </form>
+        </section>
       </div>
       <button v-if="authd" class="submit-btn" @click.prevent="createLocation">
         Save to database
@@ -59,7 +69,8 @@ export default {
   name: "StreetViewComponent",
   data() {
     return {
-      searchTerm: "New York"
+      searchTerm: "New York",
+      snapshot_description: ""
     };
   },
   computed: {
@@ -76,7 +87,9 @@ export default {
   },
   methods: {
     createLocation() {
-      this.$store.dispatch("createLocation");
+      this.$store.dispatch("createLocation", {
+        snapshot_description: this.snapshot_description
+      });
     },
     triggerSearch() {
       this.$store.dispatch("setMapLocation", this.searchTerm);
@@ -152,6 +165,19 @@ export default {
     display: flex;
     flex-direction: column;
     // justify-content: center;
+
+    &-form {
+      padding: 0.2rem;
+    }
+
+    &-input {
+      width: 100%;
+      border: none;
+      padding: 0.1rem 0.5rem;
+      outline: none;
+      font-size: 0.8rem;
+      border-radius: 4px;
+    }
 
     &-title {
       font-weight: 400;

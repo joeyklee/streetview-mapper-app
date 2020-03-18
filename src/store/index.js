@@ -18,7 +18,8 @@ export default new Vuex.Store({
       pov_heading: null,
       pov_pitch: null,
       pano_id: null,
-      links: null
+      links: null,
+      snapshot_description: null
     },
     gmap: null,
     panorama: null,
@@ -90,8 +91,12 @@ export default new Vuex.Store({
       const data = await LocationService.getLocations();
       context.commit("setLocations", data);
     },
-    async createLocation({ commit, state }) {
-      const data = await LocationService.createLocation(state.currentLocation);
+    async createLocation({ commit, state }, _data) {
+      const newLocation = {
+        ...state.currentLocation,
+        ..._data
+      };
+      const data = await LocationService.createLocation(newLocation);
       commit("createLocation", data);
     },
     async exportGeojson(context) {
