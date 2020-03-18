@@ -117,7 +117,7 @@ export default {
       const pitch = `&pitch=${_pitch}`;
       const heading = `&heading=${_heading}`;
       const pano_id = `&pano=${_pano_id}`;
-      const API_KEY = `&key=${process.env.VUE_APP_GOOGLE_MAPS_API_KEY}`;
+      const API_KEY = `&key=${this.$store.state.googlemaps_apikey}`;
       const staticURL = `${baseURL}${pitch}${heading}${pano_id}${API_KEY}`;
       return staticURL;
     },
