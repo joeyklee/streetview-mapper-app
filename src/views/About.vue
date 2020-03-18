@@ -36,12 +36,12 @@
       </p>
 
       <p class="about__content-paragraph">
-        Please report bugs or issues on
+        Please report bugs or issues on Github
         <span class="bold"
           ><a
-            href="https://github.com/all-maps-lie/streetview-mapper-app/issues"
+            href="https://github.com/joeyklee/streetview-mapper-app/issues"
             target="_blank"
-            >Github/streetview-mapper-app</a
+            >joeyklee/streetview-mapper-app</a
           ></span
         >. Thank you!
       </p>
