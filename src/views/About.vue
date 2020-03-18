@@ -36,14 +36,24 @@
       </p>
 
       <p class="about__content-paragraph">
-        Please report bugs or issues on Github
+        To learn more about the project <br />
+        →
+        <span class="bold"
+          ><a href="https://learn.streetview-mapper.org" target="_blank"
+            >learn.streetview-mapper.org</a
+          ></span
+        >
+      </p>
+      <p class="about__content-paragraph">
+        Please report bugs or issues on Github. Thank you! <br />
+        →
         <span class="bold"
           ><a
-            href="https://github.com/joeyklee/streetview-mapper-app/issues"
+            href="https://github.com/joeyklee/streetview-mapper-docs/issues"
             target="_blank"
-            >joeyklee/streetview-mapper-app</a
+            >joeyklee/streetview-mapper-docs</a
           ></span
-        >. Thank you!
+        >.
       </p>
     </div>
   </div>
