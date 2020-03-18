@@ -3,38 +3,44 @@
     <main class="overview">
       <!-- list -->
       <section class="overview__list">
-        <h3 class="overview__list-title">Your Snapshots</h3>
-        <ul class="locations">
-          <li
-            :id="location._id"
-            :ref="location._id"
-            class="locations__item"
-            v-for="location in locations"
-            :key="location._id"
-          >
-            <div class="locations__item-section">
-              <legend class="locations__item-label">lat,lon:</legend>
-              <p class="locations__item-content">
-                {{ Number(location.latitude.toFixed(5)) }},{{
-                  Number(location.longitude.toFixed(5))
-                }}
-              </p>
-            </div>
+        <div class="overview__list-container">
+          <h3 class="overview__list-title">Your Snapshots</h3>
+          <ul class="overview__list-locations">
+            <li
+              :id="location._id"
+              :ref="location._id"
+              class="overview__list-locations__item"
+              v-for="location in locations"
+              :key="location._id"
+            >
+              <div class="overview__list-locations__item-section">
+                <legend class="overview__list-locations__item-label">
+                  lat,lon:
+                </legend>
+                <p class="overview__list-locations__item-content">
+                  {{ Number(location.latitude.toFixed(5)) }},{{
+                    Number(location.longitude.toFixed(5))
+                  }}
+                </p>
+              </div>
 
-            <div class="locations__item-section">
-              <legend class="locations__item-label">static image url</legend>
-              <p class="locations__item-content">
-                {{
-                  createStaticUrl(
-                    location.pano_id,
-                    location.pov_heading,
-                    location.pov_pitch
-                  )
-                }}
-              </p>
-            </div>
-          </li>
-        </ul>
+              <div class="overview__list-locations__item-section">
+                <legend class="overview__list-locations__item-label">
+                  static image url
+                </legend>
+                <p class="overview__list-locations__item-content">
+                  {{
+                    createStaticUrl(
+                      location.pano_id,
+                      location.pov_heading,
+                      location.pov_pitch
+                    )
+                  }}
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </section>
       <!-- list -->
       <div class="overview__map" id="gmap" ref="gmap"></div>
@@ -146,11 +152,62 @@ export default {
 
   &__list {
     width: 100%;
-    max-height: 80vh;
+    height: 100%;
     margin-top: 1rem;
+    position: relative;
 
     &-title {
       margin-left: 0.5rem;
+    }
+
+    &-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    &-locations {
+      height: 100%;
+      padding: 1rem;
+      list-style: none;
+      overflow-y: scroll;
+
+      &__item {
+        padding: 0.5rem;
+        border: 1px solid black;
+        background-color: #eee;
+        &:last-child {
+          margin-bottom: 4rem;
+        }
+
+        &-section {
+          width: 100%;
+          height: auto;
+          word-wrap: break-word;
+        }
+
+        &-section:not(:last-child) {
+          margin-bottom: 0.6rem;
+        }
+
+        &-label {
+          padding: 0 0.25rem;
+          font-size: 0.7rem;
+          font-weight: 300;
+        }
+        &-content {
+          border-radius: 4px;
+          border: 1px solid #777777;
+          padding: 0 0.5rem;
+          font-size: 0.8rem;
+        }
+
+        &:not(:last-child) {
+          margin-bottom: 0.5rem;
+        }
+      }
     }
   }
 
@@ -158,45 +215,6 @@ export default {
     height: 100%;
     width: 100%;
     background-color: #eee;
-  }
-}
-
-.locations {
-  height: 100%;
-  padding: 1rem;
-  list-style: none;
-  overflow-y: scroll;
-
-  &__item {
-    padding: 0.5rem;
-    border: 1px solid black;
-    background-color: #eee;
-
-    &-section {
-      width: 100%;
-      height: auto;
-      word-wrap: break-word;
-    }
-
-    &-section:not(:last-child) {
-      margin-bottom: 0.6rem;
-    }
-
-    &-label {
-      padding: 0 0.25rem;
-      font-size: 0.7rem;
-      font-weight: 300;
-    }
-    &-content {
-      border-radius: 4px;
-      border: 1px solid #777777;
-      padding: 0 0.5rem;
-      font-size: 0.8rem;
-    }
-
-    &:not(:last-child) {
-      margin-bottom: 0.5rem;
-    }
   }
 }
 
@@ -209,5 +227,6 @@ export default {
   padding: 0.5rem;
   font-weight: 400;
   font-size: 1.2rem;
+  z-index: 1000;
 }
 </style>
