@@ -6,11 +6,36 @@
       >
     </div>
     <div class="nav__list">
-      <router-link class="nav__item nav__link" to="/login">login</router-link>
+      <router-link
+        v-if="credentials === null || credentials === undefined"
+        class="nav__item nav__link"
+        to="/login"
+        >login</router-link
+      >
+      <p v-else class="nav__item nav__link" to="/login">
+        Hi, {{ credentials }}! |
+        <button class="logout-btn" @click.prevent="handleLogout">logout</button>
+      </p>
       <!-- <router-link class="nav__item nav__link" to="/dashboard">Dashboard</router-link> -->
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "Nav",
+  computed: {
+    credentials() {
+      return this.$store.state.username;
+    }
+  },
+  methods: {
+    handleLogout() {
+      this.$store.dispatch("handleLogout");
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 #nav {
@@ -35,5 +60,12 @@
       font-weight: 900;
     }
   }
+}
+
+.logout-btn {
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  background: none;
 }
 </style>

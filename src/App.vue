@@ -13,6 +13,14 @@ import NavComponent from "@/components/NavComponent.vue";
 export default {
   name: "App",
   components: { NavComponent, FooterComponent }
+  // async mounted(){
+  //   try{
+  //     const authData = await UserService.checkAuth();
+  //     this.$store.dispatch('setUserDetails', authData);
+  //   }catch(err){
+  //     alert(err);
+  //   }
+  // }
 };
 </script>
 <style lang="scss">

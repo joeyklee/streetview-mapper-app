@@ -45,6 +45,24 @@ class UserService {
       return error;
     }
   }
+
+  /**
+   * check loggedin
+   */
+  static async checkAuth() {
+    try {
+      const result = await axios.get(`${url}/me`);
+      const data = result.data;
+      if (!data.error) {
+        return data;
+      } else {
+        throw new Error("Log in to get started");
+      }
+    } catch (error) {
+      alert("Log in to get Started");
+      return error;
+    }
+  }
 }
 
 export default UserService;

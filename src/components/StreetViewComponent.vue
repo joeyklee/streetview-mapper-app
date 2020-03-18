@@ -19,7 +19,7 @@
           <p class="sidebar__meta-content">
             <!-- {{ Number(currentLocation.latitude.toFixed(5)) }},{{
               Number(currentLocation.longitude.toFixed(5))
-            }} -->
+            }}-->
             {{ currentLocation.latitude }},{{ currentLocation.longitude }}
           </p>
         </section>
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import UserService from "@/services/UserService";
 export default {
   name: "StreetViewComponent",
   data() {
@@ -78,10 +79,16 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch("initMap", {
-      mapRef: this.$refs.gmap,
-      panoRef: this.$refs.panorama
-    });
+    try {
+      const authData = await UserService.checkAuth();
+      await this.$store.dispatch("setUserDetails", authData);
+      await this.$store.dispatch("initMap", {
+        mapRef: this.$refs.gmap,
+        panoRef: this.$refs.panorama
+      });
+    } catch (err) {
+      alert(err);
+    }
   }
 };
 </script>

@@ -2,8 +2,9 @@ import Vue from "vue";
 import Vuex from "vuex";
 const FileSaver = require("file-saver");
 import LocationService from "@/services/LocationService";
+import UserService from "@/services/UserService";
 import { Loader } from "google-maps";
-
+import Router from "../router";
 // const APIKEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
 
 Vue.use(Vuex);
@@ -24,9 +25,13 @@ export default new Vuex.Store({
     searchService: null,
     googlemaps_apikey: null,
     username: null,
-    user_id: null
+    user_id: null,
+    authd: false
   },
   mutations: {
+    setAuthd(state, bool) {
+      state.authd = bool;
+    },
     setUserDetails(state, data) {
       state.googlemaps_apikey = data.googlemaps_apikey;
       state.username = data.username;
@@ -56,13 +61,27 @@ export default new Vuex.Store({
     setCurrentLocation(state, data) {
       state.currentLocation = { ...state.currentLocation, ...data };
     }
-    // setMapLocation(state, _request){
-
-    // }
   },
   actions: {
     setUserDetails(context, data) {
       context.commit("setUserDetails", data);
+    },
+    async handleLogout(context) {
+      const logout = await UserService.logout();
+      if (logout.status === "success") {
+        alert("logout successfull");
+        context.commit("setUserDetails", {
+          username: null,
+          user_id: null,
+          googlemaps_apikey: null
+        });
+        Router.push({
+          path: "/login"
+        });
+        return;
+      } else {
+        alert("uh-oh, something went wrong at logout.");
+      }
     },
     async getLocations(context) {
       const data = await LocationService.getLocations();
