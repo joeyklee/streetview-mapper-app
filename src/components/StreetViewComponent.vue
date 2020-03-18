@@ -2,6 +2,7 @@
   <div id="StreetViewComponent">
     <div class="sidebar">
       <form class="sidebar__form" @submit.prevent="triggerSearch">
+        <span class="sidebar__form-icon">🔎</span>
         <input
           v-model="searchTerm"
           class="sidebar__form-search"
@@ -102,10 +103,30 @@ export default {
   &__form {
     width: 100%;
     height: 3rem;
+    display: flex;
+    background-color: #f4f4f4;
+
+    &-icon {
+      display: inline-block;
+      background-color: #ffffff;
+      width: 3rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid black;
+    }
+
     &-search {
+      background-color: #ffffff;
       width: 100%;
       height: 100%;
-      padding: 0 0 0 0.25rem;
+      padding: 0 0 0 0.5rem;
+      border-top: 2px solid black;
+      border-bottom: 2px solid black;
+      border-left: none;
+      border-right: 2px solid black;
+      font-size: 1.2rem;
     }
   }
 

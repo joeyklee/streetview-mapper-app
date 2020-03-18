@@ -13,10 +13,11 @@
     </section>
     <section class="footer__section">
       <router-link class="nav__item nav__link" to="/dashboard"
-        >Dashboard</router-link
+        >dashboard</router-link
       >
-      <router-link class="nav__item nav__link" to="/about">About</router-link>
-      <router-link class="nav__item nav__link" to="/login">Login</router-link>
+      <router-link class="nav__item nav__link" to="/about">about</router-link>
+      <router-link class="nav__item nav__link" to="/login">login</router-link>
+      <router-link class="nav__item nav__link" to="/signup">signup</router-link>
     </section>
   </footer>
 </template>
