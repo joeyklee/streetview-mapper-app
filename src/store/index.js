@@ -4,7 +4,7 @@ const FileSaver = require("file-saver");
 import LocationService from "@/services/LocationService";
 import { Loader } from "google-maps";
 
-const APIKEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
+// const APIKEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
 
 Vue.use(Vuex);
 
@@ -21,9 +21,17 @@ export default new Vuex.Store({
     },
     gmap: null,
     panorama: null,
-    searchService: null
+    searchService: null,
+    googlemaps_apikey: null,
+    username: null,
+    user_id: null
   },
   mutations: {
+    setUserDetails(state, data) {
+      state.googlemaps_apikey = data.googlemaps_apikey;
+      state.username = data.username;
+      state.user_id = data.user_id;
+    },
     setLocations(state, data) {
       state.locations = data;
     },
@@ -53,6 +61,9 @@ export default new Vuex.Store({
     // }
   },
   actions: {
+    setUserDetails(context, data) {
+      context.commit("setUserDetails", data);
+    },
     async getLocations(context) {
       const data = await LocationService.getLocations();
       context.commit("setLocations", data);
@@ -65,9 +76,9 @@ export default new Vuex.Store({
       const data = await LocationService.getGeoJsonLocations();
       context.commit("exportGeojson", data);
     },
-    async initMap(context, { mapRef, panoRef }) {
+    async initMap({ commit, state }, { mapRef, panoRef }) {
       const options = { libraries: ["places"] };
-      const loader = new Loader(APIKEY, options);
+      const loader = new Loader(state.googlemaps_apikey, options);
       const google = await loader.load();
       const jaystreet = { lat: 40.693361, lng: -73.98731 };
 
@@ -94,12 +105,12 @@ export default new Vuex.Store({
       panorama.addListener("pano_changed", () => {
         // console.log("pano", panorama.getPano());
         const pano_id = panorama.getPano();
-        context.commit("setCurrentLocation", { pano_id });
+        commit("setCurrentLocation", { pano_id });
       });
 
       panorama.addListener("links_changed", () => {
         const links = panorama.getLinks();
-        context.commit("setCurrentLocation", { links: [...links] });
+        commit("setCurrentLocation", { links: [...links] });
         // console.log("links", this.panorama.getLinks());
       });
 
@@ -107,7 +118,7 @@ export default new Vuex.Store({
         const position = panorama.getPosition();
         const latitude = position.lat();
         const longitude = position.lng();
-        context.commit("setCurrentLocation", { latitude, longitude });
+        commit("setCurrentLocation", { latitude, longitude });
         // console.log("position", this.latitude, this.longitude);
       });
 
@@ -115,12 +126,12 @@ export default new Vuex.Store({
         const pov = panorama.getPov();
         const pov_pitch = pov.pitch;
         const pov_heading = pov.heading;
-        context.commit("setCurrentLocation", { pov_pitch, pov_heading });
+        commit("setCurrentLocation", { pov_pitch, pov_heading });
         // console.log("pov - pitch", this.pov_pitch);
         // console.log("heading", this.pov_heading);
       });
 
-      context.commit("initMap", { gmap, panorama, searchService });
+      commit("initMap", { gmap, panorama, searchService });
     },
     // eslint-disable-next-line prettier/prettier
     setMapLocation({ state }, _request) {

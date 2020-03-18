@@ -54,7 +54,7 @@
 
 <script>
 import { Loader } from "google-maps";
-const APIKEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
+// const APIKEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
 export default {
   name: "LocationListComponent",
   data() {
@@ -72,7 +72,7 @@ export default {
     async createMap() {
       // Gmap
       const options = {};
-      const loader = new Loader(APIKEY, options);
+      const loader = new Loader(this.$store.state.googlemaps_apikey, options);
       const google = await loader.load();
       const gmap = new google.maps.Map(this.$refs.gmap, {
         center: { lat: 42.345573, lng: -71.098326 },

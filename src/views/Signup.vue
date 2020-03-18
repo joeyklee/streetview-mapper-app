@@ -8,13 +8,14 @@
         </p>
       </section>
       <h2 class="auth__title">sign up</h2>
-      <form class="auth__form">
+      <form @submit.prevent="handleSubmit" class="auth__form">
         <section class="auth__form-section">
           <label class="auth__form-label"
             >Google maps API key - be sure to enable: 1) Google Maps JavaScript
             API, 2) Places API, and 3) Street View Static API</label
           >
           <input
+            v-model="googlemaps_apikey"
             class="auth__form-input"
             type="text"
             name="apikey"
@@ -24,6 +25,7 @@
         <section class="auth__form-section">
           <label class="auth__form-label">username</label>
           <input
+            v-model="username"
             class="auth__form-input"
             type="text"
             name="username"
@@ -33,6 +35,7 @@
         <section class="auth__form-section">
           <label class="auth__form-label">email</label>
           <input
+            v-model="email"
             class="auth__form-input"
             type="email"
             name="email"
@@ -42,6 +45,7 @@
         <section class="auth__form-section">
           <label class="auth__form-label">password </label>
           <input
+            v-model="password"
             class="auth__form-input"
             type="password"
             name="password"
@@ -57,8 +61,44 @@
 </template>
 
 <script>
+import Router from "../router";
+import UserService from "@/services/UserService";
+
 export default {
-  name: "Signup"
+  name: "Signup",
+  data() {
+    return {
+      username: null,
+      googlemaps_apikey: null,
+      password: null,
+      email: null
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      try {
+        const credentials = {
+          username: this.username,
+          password: this.password,
+          googlemaps_apikey: this.googlemaps_apikey,
+          email: this.email
+        };
+
+        const result = await UserService.signup(credentials);
+
+        if (result) {
+          Router.push({
+            path: "/login"
+          });
+          this.$store.dispatch("setUserDetails", result);
+          return result;
+        }
+        throw new Error("uh-oh! Error with sign up.");
+      } catch (err) {
+        alert(err);
+      }
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

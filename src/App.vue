@@ -9,6 +9,7 @@
 <script>
 import FooterComponent from "@/components/FooterComponent.vue";
 import NavComponent from "@/components/NavComponent.vue";
+// import UserService from "@/services/UserService";
 export default {
   name: "App",
   components: { NavComponent, FooterComponent }

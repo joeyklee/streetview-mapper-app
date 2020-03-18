@@ -7,7 +7,7 @@
         </p>
       </section>
       <h2 class="auth__title">login</h2>
-      <form class="auth__form">
+      <form @submit.prevent="handleSubmit" class="auth__form">
         <!-- <section class="auth__form-section">
         <label class="auth__form-label">username</label>
         <input class="auth__form-input" type="text" name="username" id="" />
@@ -16,6 +16,7 @@
           <label class="auth__form-label">email</label>
           <input
             class="auth__form-input"
+            v-model="email"
             type="email"
             name="email"
             id="email"
@@ -26,6 +27,7 @@
           <label class="auth__form-label">password</label>
           <input
             class="auth__form-input"
+            v-model="password"
             type="password"
             name="password"
             id="password"
@@ -40,8 +42,43 @@
 </template>
 
 <script>
+import Router from "../router";
+import UserService from "@/services/UserService";
 export default {
-  name: "Login"
+  name: "Login",
+  data() {
+    return {
+      username: null,
+      password: null,
+      email: null
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      try {
+        const credentials = {
+          username: this.username,
+          password: this.password,
+          email: this.email
+        };
+
+        const result = await UserService.login(credentials);
+
+        if (result) {
+          this.$store.dispatch("setUserDetails", result);
+
+          Router.push({
+            path: "/"
+          });
+
+          return result;
+        }
+        throw new Error("uh-oh! Error with log in.");
+      } catch (err) {
+        alert(err);
+      }
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

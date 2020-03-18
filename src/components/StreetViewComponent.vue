@@ -17,23 +17,26 @@
         <section class="sidebar__meta-section">
           <legend class="sidebar__meta-label">lat,lon:</legend>
           <p class="sidebar__meta-content">
-            {{ Number(currentLocation.latitude.toFixed(5)) }},{{
+            <!-- {{ Number(currentLocation.latitude.toFixed(5)) }},{{
               Number(currentLocation.longitude.toFixed(5))
-            }}
+            }} -->
+            {{ currentLocation.latitude }},{{ currentLocation.longitude }}
           </p>
         </section>
 
         <section class="sidebar__meta-section">
           <legend class="sidebar__meta-label">heading</legend>
           <p class="sidebar__meta-content">
-            {{ Number(currentLocation.pov_heading.toFixed(5)) }}
+            <!-- {{ Number(currentLocation.pov_heading.toFixed(5)) }} -->
+            {{ currentLocation.pov_heading }}
           </p>
         </section>
 
         <section class="sidebar__meta-section">
           <legend class="sidebar__meta-label">pitch</legend>
           <p class="sidebar__meta-content">
-            {{ Number(currentLocation.pov_pitch.toFixed(5)) }}
+            <!-- {{ Number(currentLocation.pov_pitch.toFixed(5)) }} -->
+            {{ currentLocation.pov_pitch }}
           </p>
         </section>
 
@@ -71,7 +74,6 @@ export default {
       this.$store.dispatch("createLocation");
     },
     triggerSearch() {
-      console.log(this.searchTerm);
       this.$store.dispatch("setMapLocation", this.searchTerm);
     }
   },
