@@ -125,6 +125,7 @@ export default {
     height: 2rem;
     border: 2px solid black;
     border-radius: 4px;
+    padding: 0 0 0 0.5rem;
   }
 
   &-submit {
