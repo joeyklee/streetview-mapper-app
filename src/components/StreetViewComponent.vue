@@ -45,7 +45,7 @@
           <p class="sidebar__meta-content">{{ currentLocation.pano_id }}</p>
         </section>
       </div>
-      <button class="submit-btn" @click.prevent="createLocation">
+      <button v-if="authd" class="submit-btn" @click.prevent="createLocation">
         Save to database
       </button>
     </div>
@@ -68,6 +68,10 @@ export default {
         return this.$store.state.currentLocation;
       }
       return { latitude: 0, longitude: 0, pov_heading: 0, pov_pitch: 0 };
+    },
+    authd() {
+      const username = this.$store.state.username;
+      return username !== undefined ? true : false;
     }
   },
   methods: {
