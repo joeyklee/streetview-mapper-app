@@ -10,7 +10,7 @@
         curious mappers (like you!) to take «snapshots» of the world through
         Google Streetview. These snapshots are stored in a database to allow
         users to revisit what things they've found remarkable, noteworthy,
-        strange, weird, and/or compelling.
+        strange, weird, compelling, and interesting.
       </p>
       <p class="about__content-paragraph">
         This is a project by
