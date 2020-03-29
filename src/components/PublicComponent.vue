@@ -10,10 +10,12 @@
       >
         <div class="public-snapshots__item-section">
           <p class="public-snapshots__item-content">
-            <img
-              v-bind:src="location.staticURL"
-              class="public-snapshots__item-img"
-            />
+            <a v-bind:href="location.gmapsURL" target="_blank">
+              <img
+                v-bind:src="location.staticURL"
+                class="public-snapshots__item-img"
+              />
+            </a>
           </p>
         </div>
         <div class="public-snapshots__item-section">
@@ -74,6 +76,9 @@ export default {
       const API_KEY = `&key=${key}`;
       const staticURL = `${baseURL}${pitch}${heading}${pano_id}${API_KEY}`;
       return staticURL;
+    },
+    createGoogleMapsUrl(location) {
+      return `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${location.latitude},${location.longitude}&heading=${location.pov_heading}&pitch=${location.pov_pitch}&fov=180`;
     }
   },
   async mounted() {
@@ -85,7 +90,8 @@ export default {
           item.pano_id,
           item.pov_heading,
           item.pov_pitch
-        )
+        ),
+        gmapsURL: this.createGoogleMapsUrl(item)
       };
     });
     this.locations = locations;
