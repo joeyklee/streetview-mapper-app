@@ -190,7 +190,6 @@ export default {
       this.$store.dispatch("exportGeojson");
     },
     panToLocation(id) {
-      console.log("clicked!", id);
       const selected = this.locations.find(
         item => String(item._id) === String(id)
       );
