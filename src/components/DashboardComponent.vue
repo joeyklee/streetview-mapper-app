@@ -13,17 +13,6 @@
               v-for="location in locations"
               :key="location._id"
             >
-              <!-- lat/lng -->
-              <div class="overview__list-locations__item-section">
-                <legend class="overview__list-locations__item-label">
-                  lat,lon:
-                </legend>
-                <p class="overview__list-locations__item-content">
-                  {{ Number(location.latitude.toFixed(5)) }},{{
-                    Number(location.longitude.toFixed(5))
-                  }}
-                </p>
-              </div>
               <!-- Image Preview-->
               <div class="overview__list-locations__item-section">
                 <legend class="overview__list-locations__item-label">
@@ -36,12 +25,38 @@
                   />
                 </p>
               </div>
+              <!-- pan to-->
+              <div class="overview__list-locations__item-section">
+                <p class="overview__list-locations__item-content">
+                  <button
+                    class="overview__list-locations__item-button"
+                    @click="panToLocation(location._id)"
+                  >
+                    Zoom to location
+                  </button>
+                </p>
+              </div>
+              <!-- lat/lng -->
+              <div class="overview__list-locations__item-section">
+                <legend class="overview__list-locations__item-label">
+                  lat,lon:
+                </legend>
+                <p
+                  class="overview__list-locations__item-content overview__list-locations__item-content--b"
+                >
+                  {{ Number(location.latitude.toFixed(5)) }},{{
+                    Number(location.longitude.toFixed(5))
+                  }}
+                </p>
+              </div>
               <!-- static URL -->
               <div class="overview__list-locations__item-section">
                 <legend class="overview__list-locations__item-label">
                   static image url
                 </legend>
-                <p class="overview__list-locations__item-content">
+                <p
+                  class="overview__list-locations__item-content overview__list-locations__item-content--b"
+                >
                   {{ location.staticURL }}
                 </p>
               </div>
@@ -55,7 +70,9 @@
                 <legend class="overview__list-locations__item-label">
                   #tags
                 </legend>
-                <p class="overview__list-locations__item-content">
+                <p
+                  class="overview__list-locations__item-content overview__list-locations__item-content--b"
+                >
                   {{ location.snapshot_tags }}
                 </p>
               </div>
@@ -67,7 +84,9 @@
                 <legend class="overview__list-locations__item-label">
                   Description
                 </legend>
-                <p class="overview__list-locations__item-content">
+                <p
+                  class="overview__list-locations__item-content overview__list-locations__item-content--b"
+                >
                   {{ location.snapshot_description }}
                 </p>
               </div>
@@ -155,6 +174,8 @@ export default {
         });
         return marker;
       });
+
+      this.gmap = gmap;
     },
     createStaticUrl(_pano_id, _heading, _pitch) {
       const baseURL = `https://maps.googleapis.com/maps/api/streetview?size=640x640`;
@@ -167,6 +188,13 @@ export default {
     },
     exportGeojson() {
       this.$store.dispatch("exportGeojson");
+    },
+    panToLocation(id) {
+      console.log("clicked!", id);
+      const selected = this.locations.find(
+        item => String(item._id) === String(id)
+      );
+      this.gmap.setCenter({ lat: selected.latitude, lng: selected.longitude });
     }
   },
   async mounted() {
@@ -241,13 +269,21 @@ export default {
         }
         &-content {
           border-radius: 4px;
-          border: 1px solid #777777;
-          padding: 0 0.5rem;
           font-size: 0.8rem;
+
+          &--b {
+            border: 1px solid #777777;
+            padding: 0 0.5rem;
+          }
         }
 
         &-img {
           width: 100%;
+        }
+
+        &-button {
+          width: 100%;
+          padding: 0.1rem 0;
         }
 
         &:not(:last-child) {
