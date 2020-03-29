@@ -159,6 +159,29 @@ export default new Vuex.Store({
         // console.log("heading", this.pov_heading);
       });
 
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            gmap.setCenter(pos);
+            panorama.setPosition(pos);
+          },
+          function() {
+            // handleLocationError(true, infoWindow, map.getCenter());
+            console.log("location permitted");
+          }
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        // handleLocationError(false, infoWindow, map.getCenter());
+        console.log("geolocation was not permitted");
+      }
+
       commit("initMap", { gmap, panorama, searchService });
     },
     // eslint-disable-next-line prettier/prettier

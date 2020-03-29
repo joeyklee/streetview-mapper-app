@@ -138,8 +138,10 @@ export default {
       const options = {};
       const loader = new Loader(this.$store.state.googlemaps_apikey, options);
       const google = await loader.load();
+
+      const lastAdded = this.locations[this.locations.length - 1];
       const gmap = new google.maps.Map(this.$refs.gmap, {
-        center: { lat: 40.6932965, lng: -73.9874731 },
+        center: { lat: lastAdded.latitude, lng: lastAdded.longitude },
         zoom: 14
       });
 
