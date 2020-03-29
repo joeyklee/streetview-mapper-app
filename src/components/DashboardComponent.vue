@@ -13,6 +13,7 @@
               v-for="location in locations"
               :key="location._id"
             >
+              <!-- lat/lng -->
               <div class="overview__list-locations__item-section">
                 <legend class="overview__list-locations__item-label">
                   lat,lon:
@@ -23,19 +24,51 @@
                   }}
                 </p>
               </div>
-
+              <!-- Image Preview-->
+              <div class="overview__list-locations__item-section">
+                <legend class="overview__list-locations__item-label">
+                  Image Preview
+                </legend>
+                <p class="overview__list-locations__item-content">
+                  <img
+                    v-bind:src="location.staticURL"
+                    class="overview__list-locations__item-img"
+                  />
+                </p>
+              </div>
+              <!-- static URL -->
               <div class="overview__list-locations__item-section">
                 <legend class="overview__list-locations__item-label">
                   static image url
                 </legend>
                 <p class="overview__list-locations__item-content">
-                  {{
-                    createStaticUrl(
-                      location.pano_id,
-                      location.pov_heading,
-                      location.pov_pitch
-                    )
-                  }}
+                  {{ location.staticURL }}
+                </p>
+              </div>
+              <!-- tags -->
+              <div
+                v-if="
+                  location.snapshot_tags && location.snapshot_tags.length > 0
+                "
+                class="overview__list-locations__item-section"
+              >
+                <legend class="overview__list-locations__item-label">
+                  #tags
+                </legend>
+                <p class="overview__list-locations__item-content">
+                  {{ location.snapshot_tags }}
+                </p>
+              </div>
+              <!-- description -->
+              <div
+                v-if="location.snapshot_description"
+                class="overview__list-locations__item-section"
+              >
+                <legend class="overview__list-locations__item-label">
+                  Description
+                </legend>
+                <p class="overview__list-locations__item-content">
+                  {{ location.snapshot_description }}
                 </p>
               </div>
             </li>
@@ -66,7 +99,18 @@ export default {
   },
   computed: {
     locations() {
-      return this.$store.state.locations;
+      let locations = this.$store.state.locations;
+      locations = locations.map(item => {
+        return {
+          ...item,
+          staticURL: this.createStaticUrl(
+            item.pano_id,
+            item.pov_heading,
+            item.pov_pitch
+          )
+        };
+      });
+      return locations;
     }
   },
   methods: {
@@ -200,6 +244,10 @@ export default {
           border: 1px solid #777777;
           padding: 0 0.5rem;
           font-size: 0.8rem;
+        }
+
+        &-img {
+          width: 100%;
         }
 
         &:not(:last-child) {
