@@ -176,13 +176,14 @@ export default new Vuex.Store({
           },
           function() {
             // handleLocationError(true, infoWindow, map.getCenter());
-            console.log("location permitted");
+            // console.log("location permitted");
           }
         );
       } else {
         // Browser doesn't support Geolocation
         // handleLocationError(false, infoWindow, map.getCenter());
-        console.log("geolocation was not permitted");
+        // console.log("geolocation was not permitted");
+        alert("user location was not permitted");
       }
 
       commit("initMap", { gmap, panorama, searchService });
