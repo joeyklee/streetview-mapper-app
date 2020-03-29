@@ -6,7 +6,7 @@ import UserService from "@/services/UserService";
 import { Loader } from "google-maps";
 import Router from "../router";
 
-const APIKEY = "AIzaSyDqm1UF2DnCYCUAOwXCrBLVX1If0XxG04o";
+const APIKEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
 
 Vue.use(Vuex);
 
