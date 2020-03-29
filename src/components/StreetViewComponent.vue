@@ -24,31 +24,46 @@
           </p>
         </section>
 
-        <section class="sidebar__meta-section">
-          <legend class="sidebar__meta-label">heading</legend>
-          <p class="sidebar__meta-content">
-            <!-- {{ Number(currentLocation.pov_heading.toFixed(5)) }} -->
-            {{ currentLocation.pov_heading }}
-          </p>
-        </section>
-
-        <section class="sidebar__meta-section">
-          <legend class="sidebar__meta-label">pitch</legend>
-          <p class="sidebar__meta-content">
-            <!-- {{ Number(currentLocation.pov_pitch.toFixed(5)) }} -->
-            {{ currentLocation.pov_pitch }}
-          </p>
+        <section class="sidebar__meta-section sidebar__meta-section--2col">
+          <!-- heading -->
+          <section class="sidebar__meta-subsection">
+            <legend class="sidebar__meta-label">heading</legend>
+            <p class="sidebar__meta-content">
+              <!-- {{ Number(currentLocation.pov_heading.toFixed(5)) }} -->
+              {{ currentLocation.pov_heading }}
+            </p>
+          </section>
+          <!-- pitch -->
+          <section class="sidebar__meta-subsection">
+            <legend class="sidebar__meta-label">pitch</legend>
+            <p class="sidebar__meta-content">
+              <!-- {{ Number(currentLocation.pov_pitch.toFixed(5)) }} -->
+              {{ currentLocation.pov_pitch }}
+            </p>
+          </section>
         </section>
 
         <section class="sidebar__meta-section">
           <legend class="sidebar__meta-label">panorama id</legend>
           <p class="sidebar__meta-content">{{ currentLocation.pano_id }}</p>
         </section>
+
         <section v-if="authd" class="sidebar__meta-section">
           <legend class="sidebar__meta-label">add a description</legend>
           <form class="sidebar__meta-form">
             <input
               v-model="snapshot_description"
+              class="sidebar__meta-input"
+              type="text"
+            />
+          </form>
+        </section>
+
+        <section v-if="authd" class="sidebar__meta-section">
+          <legend class="sidebar__meta-label">#tags</legend>
+          <form class="sidebar__meta-form">
+            <input
+              v-model="snapshot_tags"
               class="sidebar__meta-input"
               type="text"
             />
@@ -70,7 +85,8 @@ export default {
   data() {
     return {
       searchTerm: "New York",
-      snapshot_description: ""
+      snapshot_description: "",
+      snapshot_tags: ""
     };
   },
   computed: {
@@ -87,8 +103,10 @@ export default {
   },
   methods: {
     createLocation() {
+      // const tagsToArray = this.snapshot_tags.match(/#[\p{L}]+/giu); // since we only store text we don't need this
       this.$store.dispatch("createLocation", {
-        snapshot_description: this.snapshot_description
+        snapshot_description: this.snapshot_description,
+        snapshot_tags: this.snapshot_tags
       });
     },
     triggerSearch() {
@@ -190,6 +208,11 @@ export default {
       border: 1px solid #777777;
       border-radius: 4px;
       word-wrap: break-word;
+
+      &--2col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     &-section:not(:last-child) {

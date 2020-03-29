@@ -19,7 +19,8 @@ export default new Vuex.Store({
       pov_pitch: null,
       pano_id: null,
       links: null,
-      snapshot_description: null
+      snapshot_description: null,
+      snapshot_tags: null
     },
     gmap: null,
     panorama: null,
