@@ -5,7 +5,8 @@ import LocationService from "@/services/LocationService";
 import UserService from "@/services/UserService";
 import { Loader } from "google-maps";
 import Router from "../router";
-// const APIKEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
+
+const APIKEY = "AIzaSyDqm1UF2DnCYCUAOwXCrBLVX1If0XxG04o";
 
 Vue.use(Vuex);
 
@@ -35,7 +36,9 @@ export default new Vuex.Store({
       state.authd = bool;
     },
     setUserDetails(state, data) {
-      state.googlemaps_apikey = data.googlemaps_apikey;
+      state.googlemaps_apikey = data.googlemaps_apikey
+        ? data.googlemaps_apikey
+        : APIKEY;
       state.username = data.username;
       state.user_id = data.user_id;
     },

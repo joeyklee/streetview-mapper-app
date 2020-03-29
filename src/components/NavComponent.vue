@@ -9,8 +9,8 @@
       <router-link
         v-if="credentials === null || credentials === undefined"
         class="nav__item nav__link"
-        to="/login"
-        >login</router-link
+        to="/signup"
+        >signup/login</router-link
       >
       <p v-else class="nav__item nav__link" to="/login">
         Hi, {{ credentials }}! |

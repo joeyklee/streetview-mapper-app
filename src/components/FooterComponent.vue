@@ -7,7 +7,7 @@
           href="https://developers.google.com/maps/documentation/javascript/tutorial"
           target="_blank"
           >Google Maps API</a
-        >. Built during the 2020 covid-19 pandemic by
+        >. Built with ❤ by
         <a href="https://jk-lee.com" target="blank">Joey Lee</a>.
       </p>
     </section>

@@ -59,7 +59,9 @@ class UserService {
         throw new Error("Log in to get started");
       }
     } catch (error) {
-      alert("Log in to get Started");
+      alert(
+        "\n------------------------------------------------------------------------\nStreetview Mapper is a tool to share what your see \nin the world of Google Streetview.\n------------------------------------------------------------------------ \n\n\n Create an account \n→ https://streetview-mapper.org/signup \n\n Log in to start mapping! \n→ https://streetview-mapper.org/login"
+      );
       return error;
     }
   }
