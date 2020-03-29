@@ -5,6 +5,7 @@ import Dashboard from "../views/Dashboard.vue";
 import About from "../views/About.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
+import Public from "../views/Public.vue";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: "/signup",
     name: "Signup",
     component: Signup
+  },
+  {
+    path: "/public",
+    name: "Public",
+    component: Public
   }
 ];
 

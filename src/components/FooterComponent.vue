@@ -12,6 +12,7 @@
       </p>
     </section>
     <section class="footer__section">
+      <router-link class="nav__item nav__link" to="/public">public</router-link>
       <router-link class="nav__item nav__link" to="/dashboard"
         >dashboard</router-link
       >
