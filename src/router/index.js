@@ -6,6 +6,7 @@ import About from "../views/About.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 import Public from "../views/Public.vue";
+import ResetPassword from "../views/ResetPassword.vue";
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,11 @@ const routes = [
     path: "/public",
     name: "Public",
     component: Public
+  },
+  {
+    path: "/reset-password",
+    name: "ResetPassword",
+    component: ResetPassword
   }
 ];
 

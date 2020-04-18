@@ -47,6 +47,38 @@ class UserService {
   }
 
   /**
+   * forgotPassword
+   */
+  static async forgotPassword(credentials) {
+    try {
+      const result = await axios.post(
+        `${url}/auth/forgot_password`,
+        credentials
+      );
+      const data = result.data;
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  /**
+   * forgotPassword
+   */
+  static async resetPassword(credentials) {
+    try {
+      const result = await axios.post(
+        `${url}/auth/reset_password`,
+        credentials
+      );
+      const data = result.data;
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  /**
    * check loggedin
    */
   static async checkAuth() {

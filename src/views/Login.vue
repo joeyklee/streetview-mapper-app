@@ -23,8 +23,12 @@
           />
         </section>
         <section class="auth__form-section">
-          <!-- <label class="auth__form-label">password | <router-link to="/reset_password">I forgot</router-link> </label> -->
-          <label class="auth__form-label">password</label>
+          <label class="auth__form-label"
+            >password |
+            <router-link to="/reset-password"
+              >I forgot / request reset
+            </router-link></label
+          >
           <input
             class="auth__form-input"
             v-model="password"
